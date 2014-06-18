@@ -1,13 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
- 
+
 namespace Calculator
 {
-    public class ExpressionParser
+    public interface IExpressionParser
+    {
+        bool Validate(string expression);
+        IList<string> Parse(string expression);
+        bool TryParse(string expression, out IList<string> parsedExpression);
+    }
+
+    public class ExpressionParser : IExpressionParser
     {
         public bool Validate(string expression)
         {
@@ -30,13 +33,14 @@ namespace Calculator
             {
                 var match = Regex.Match(expression, pattern, RegexOptions.IgnorePatternWhitespace);
 
-                parsedExpression.Add(match.Groups[left].Value);
-
+                var leftText = match.Groups[left].Value;
                 operatorText = match.Groups[@operator].Value;
+                expression = match.Groups[right].Value;
+
+                parsedExpression.Add(leftText);
                 if (!string.IsNullOrEmpty(operatorText))
                     parsedExpression.Add(operatorText);
 
-                expression = match.Groups[right].Value;
             }
             while (!string.IsNullOrEmpty(operatorText));
 

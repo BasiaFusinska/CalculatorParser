@@ -12,19 +12,16 @@ namespace ConsoleCalculator
         static void Main(string[] args)
         {
             var expression = Console.ReadLine();
+            var calculator = new Calculator.Calculator(new ExpressionParser(), new ExpressionBuilder());
 
-            var parser = new ExpressionParser();
-
-            if (!parser.Validate(expression))
+            if (!calculator.CanCalculate(expression))
             {
                 Console.WriteLine("Wrong expression");
                 return;
             }
 
-            var builder = new ExpressionBuilder();
-            var expressionNode = builder.BuildExpression(parser.Parse(expression));
-
-            Console.WriteLine("Calculated value: {0}", expressionNode.CalculateValue());
+            var calculatedValue = calculator.Calculate(expression);
+            Console.WriteLine("Calculated value: {0}", calculatedValue);
         }
     }
 }

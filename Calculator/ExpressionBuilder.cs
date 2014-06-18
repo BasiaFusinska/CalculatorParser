@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Calculator
 {
-    public class ExpressionBuilder
+    public interface IExpressionBuilder
+    {
+        IExpressionNode BuildExpression(IList<string> expressionList);
+    }
+    public class ExpressionBuilder : IExpressionBuilder
     {
         private readonly IDictionary<string, Func<double, double, double>> _operationSymbol2Function =
             new Dictionary<string, Func<double, double, double>>
@@ -21,18 +22,18 @@ namespace Calculator
         {
             var leftValue = int.Parse(expressionList[0]);
             IExpressionNode leftNode = new ConstNode(leftValue);
-            var functionSymbol = expressionList.Count > 1 ? expressionList[1] : null;
+            var operationSymbol = expressionList.Count > 1 ? expressionList[1] : null;
 
             var index = 2;
 
-            while (functionSymbol != null)
+            while (operationSymbol != null)
             {
                 var rightNode = BuildRightNode(expressionList, ref index);
-                var function = _operationSymbol2Function[functionSymbol];
+                var operation = _operationSymbol2Function[operationSymbol];
 
-                leftNode = new OperationNode(leftNode, rightNode, function);
+                leftNode = new OperationNode(leftNode, rightNode, operation);
 
-                functionSymbol = expressionList.Count > index ? expressionList[index] : null;
+                operationSymbol = expressionList.Count > index ? expressionList[index] : null;
                 index++;
             }
             return leftNode;
@@ -42,20 +43,20 @@ namespace Calculator
         {
             var leftValue = int.Parse(expressionList[index]);
             var leftNode = new ConstNode(leftValue);
-            var functionSymbol = expressionList.Count > index + 1 ? expressionList[index + 1] : null;
+            var operationSymbol = expressionList.Count > index + 1 ? expressionList[index + 1] : null;
 
-            if (functionSymbol == null || functionSymbol == "+" || functionSymbol == "-")
+            if (operationSymbol == null || operationSymbol == "+" || operationSymbol == "-")
             {
                 index++;
                 return leftNode;
             }
 
-            var function = _operationSymbol2Function[functionSymbol];
+            var operation = _operationSymbol2Function[operationSymbol];
 
             index += 2;
             var rightNode = BuildRightNode(expressionList, ref index);
             
-            return new OperationNode(leftNode, rightNode, function);
+            return new OperationNode(leftNode, rightNode, operation);
         }
     }
 }
