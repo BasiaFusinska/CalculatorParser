@@ -1,7 +1,6 @@
 ﻿using System.Runtime.CompilerServices;
 [assembly: InternalsVisibleTo("CalculatorTests")]
 
-
 namespace Calculator
 {
     public class Calculator

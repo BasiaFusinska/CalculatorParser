@@ -126,7 +126,7 @@ namespace CalculatorTests
         [InlineData(17, 6, 2, 9)]
         [InlineData(456, 3, 8, 6)]
         [InlineData(1098, 9, 4, 67)]
-        public void RightLftNestedExpressionTest(int a, int b, int c, int d)
+        public void RightLeftNestedExpressionTest(int a, int b, int c, int d)
         {
             var aNode = new ConstNode(a);
             var bNode = new ConstNode(b);
@@ -141,6 +141,5 @@ namespace CalculatorTests
 
             calculatedValue.Should().Be((a + b) * (c - d));
         }
-
     }
 }
