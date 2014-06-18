@@ -1,20 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Runtime.CompilerServices;
+[assembly: InternalsVisibleTo("CalculatorTests")]
+
 
 namespace Calculator
 {
     public class Calculator
     {
-        private readonly IExpressionParser _parser;
-        private readonly IExpressionBuilder _builder;
+        private readonly ExpressionParser _parser;
+        private readonly ExpressionBuilder _builder;
 
-        public Calculator(IExpressionParser parser, IExpressionBuilder builder)
+        public Calculator()
         {
-            _parser = parser;
-            _builder = builder;
+            _parser = new ExpressionParser();
+            _builder = new ExpressionBuilder();
         }
 
         public bool CanCalculate(string expression)

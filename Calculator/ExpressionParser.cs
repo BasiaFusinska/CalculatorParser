@@ -1,16 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
 namespace Calculator
 {
-    public interface IExpressionParser
-    {
-        bool Validate(string expression);
-        IList<string> Parse(string expression);
-        bool TryParse(string expression, out IList<string> parsedExpression);
-    }
-
-    public class ExpressionParser : IExpressionParser
+    internal class ExpressionParser
     {
         public bool Validate(string expression)
         {
@@ -20,6 +14,8 @@ namespace Calculator
 
         public IList<string> Parse(string expression)
         {
+            if (!Validate(expression)) throw new ArgumentException("Invalid expresion", "expression");
+
             const string left = "left";
             const string @operator = "operator";
             const string right = "right";

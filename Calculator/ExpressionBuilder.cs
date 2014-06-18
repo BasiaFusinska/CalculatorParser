@@ -3,11 +3,7 @@ using System.Collections.Generic;
 
 namespace Calculator
 {
-    public interface IExpressionBuilder
-    {
-        IExpressionNode BuildExpression(IList<string> expressionList);
-    }
-    public class ExpressionBuilder : IExpressionBuilder
+    internal class ExpressionBuilder
     {
         private readonly IDictionary<string, Func<double, double, double>> _operationSymbol2Function =
             new Dictionary<string, Func<double, double, double>>

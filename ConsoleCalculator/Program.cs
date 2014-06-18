@@ -12,7 +12,7 @@ namespace ConsoleCalculator
         static void Main(string[] args)
         {
             var expression = Console.ReadLine();
-            var calculator = new Calculator.Calculator(new ExpressionParser(), new ExpressionBuilder());
+            var calculator = new Calculator.Calculator();
 
             if (!calculator.CanCalculate(expression))
             {

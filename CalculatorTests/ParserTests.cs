@@ -41,6 +41,5 @@ namespace CalculatorTests
                 parsedExpression[i].Should().Be(parameters[i]);
             }
         }
- 
     }
 }
